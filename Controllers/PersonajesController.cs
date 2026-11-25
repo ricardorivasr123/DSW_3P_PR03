@@ -1,10 +1,12 @@
 using CharacterHub.DTOs;
 using CharacterHub.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CharacterHub.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/personajes")]
 [Produces("application/json")]
 public sealed class PersonajesController(IPersonajeService service) : ControllerBase
