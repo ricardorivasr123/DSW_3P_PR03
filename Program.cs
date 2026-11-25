@@ -97,6 +97,20 @@ builder.Services
     });
 builder.Services.AddAuthorization();
 
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("EvaluationClient", policy =>
+    {
+        if (allowedOrigins.Length > 0)
+        {
+            policy.WithOrigins(allowedOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        }
+    });
+});
+
 builder.Services.AddScoped<IPersonajeService, PersonajeService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
@@ -105,6 +119,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("EvaluationClient");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

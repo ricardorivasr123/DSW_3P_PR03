@@ -35,3 +35,13 @@ dotnet run
 ```
 
 Inicia sesión con `POST /api/auth/login`, copia `accessToken` y utiliza el esquema Bearer en Swagger. Todas las rutas `/api/personajes` requieren un token válido. El vencimiento se configura con `Jwt__ExpirationMinutes` (1 a 1440; predeterminado 60).
+
+## CORS
+
+Configura el origen exacto del cliente de evaluación indicado por el docente:
+
+```powershell
+$env:Cors__AllowedOrigins__0 = "http://localhost:3000"
+```
+
+La API permite los métodos y encabezados necesarios. Sin orígenes configurados, no habilita solicitudes CORS externas.
